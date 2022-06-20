@@ -24,7 +24,13 @@ int main(void)
     unsigned int c1 = 1U;
     unsigned long d1 = 1UL;
     unsigned long long e1 = 1ULL;
-
+    // 16进制表示数字
+    long d2 = 0xEEEDCL;
+    unsigned long long e2 = 0xFDDABBULL;
+    // 8进制:由于以前存在36位机器，所以出现8进制数
+    long d3 = 0543154L;
+    unsigned long long e3 = 0123414125ULL;
+    
 
 
 
