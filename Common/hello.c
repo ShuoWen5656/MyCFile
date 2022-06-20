@@ -16,14 +16,16 @@ int main(void)
     signed char a = '1'; // 有符号char 8位
     short b = 1;
     int c = 1;
-    long int d = 1;
-    long long e = 1;
+    long int d = 1L;
+    long long e = 1LL;
     // 5个无符号
     unsigned char a1 = '1'; // 无符号类型 8位
     unsigned short b1 = 1;
-    unsigned int c1 = 1;
-    unsigned long d1 = 1;
-    unsigned long long e1 = 1;
+    unsigned int c1 = 1U;
+    unsigned long d1 = 1UL;
+    unsigned long long e1 = 1ULL;
+
+
 
 
 
