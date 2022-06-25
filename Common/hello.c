@@ -32,11 +32,7 @@ int main(void)
     unsigned long long e3 = 0123414125ULL;
     
 
-
-
-
-
-
+    
     char salary = 1;
     // printf("My salary is %s \n", salary);
     // printf("hello world!! \" %s\"  \t testtt \n", ZSW_NAME); // the quotation is like java's
