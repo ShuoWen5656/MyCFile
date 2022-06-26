@@ -20,10 +20,10 @@ int main(void)
     long long e = 1LL;
     // 5个无符号
     unsigned char a1 = '1'; // 无符号类型 8位
-    unsigned short b1 = 1;
-    unsigned int c1 = 1U;
-    unsigned long d1 = 1UL;
-    unsigned long long e1 = 1ULL;
+    unsigned short b1 = 1; // 16位
+    unsigned int c1 = 1U;  // 32
+    unsigned long d1 = 1UL; // 32
+    unsigned long long e1 = 1ULL; // 64
     // 16进制表示数字
     long d2 = 0xEEEDCL;
     unsigned long long e2 = 0xFDDABBULL;
@@ -31,13 +31,23 @@ int main(void)
     long d3 = 0543154L;
     unsigned long long e3 = 0123414125ULL;
     
+    float f1 = 1.0f; // 32
+    double x1 = 1.0; // 64
+    long double x2 = 1.0L; // 92
+
+    double test_float1 = 10.1234567f;
+    float test_float2 = 4.0f;
+    float test_float3 = 0.0f;
+
 
     
     char salary = 1;
+    printf("test_float1 is %.99f, test_float2 is %.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
+
     // printf("My salary is %s \n", salary);
     // printf("hello world!! \" %s\"  \t testtt \n", ZSW_NAME); // the quotation is like java's
-    printf("first string is %d" "second string is %d", 
-                                                    123,321);
+    // printf("first string is %d" "second string is %d", 
+    //                                                 123,321);
     // printf("\b hi there");
     return 0; // 返回非0，表示异常退出，main函数返回后将控制权交给操作系统
 }
