@@ -34,23 +34,48 @@ int main(void)
     float f1 = 1.0f; // 32
     double x1 = 1.0; // 64
     long double x2 = 1.0L; // 92
-
+    // 测试格式说明符格式化长度使用
     double test_float1 = 10.1234567f;
     float test_float2 = 4.1542343f;
     float test_float3 = 0.0f;
 
+    /**
+     * 获取各种类型的数值所用得格式说明符, &为寻址运算符
+     */
+    // short类型
+    scanf("%hd", &b);
+    // int
+    scanf("%d", &c);
+    // long
+    scanf("%ld", &d);
+    scanf("%lld", &e);
+    scanf("%f", &f1);
+    // double
+    scanf("%lf", &x1);
 
+
+
+
+//    char inputString = '1';
+//    scanf("%f", &test_float3);
+
+    printf("input is %3.1f", test_float3);
     
     char salary = 1;
     // .3 为小数点后3位保留,省略掉的会四舍五入
-    // printf("test_float1 is %.4f, test_float2 is %.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
+//     printf("test_float1 is %.4f, test_float2 is %2.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
     // %10.3f 为小数点后三位，总长为10位，不够10位的，左边补空格
     // 如果想要左对齐, %-10.3f,右边补空格
-    printf("test_float1 is %10.4f, test_float2 is %-10.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
+//    printf("test_float1 is %10.4f, test_float2 is %-10.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
     // printf("My salary is %s \n", salary);
     // printf("hello world!! \" %s\"  \t testtt \n", ZSW_NAME); // the quotation is like java's
     // printf("first string is %d" "second string is %d", 
     //                                                 123,321);
     // printf("\b hi there");
+
+
+
+
+
     return 0; // 返回非0，表示异常退出，main函数返回后将控制权交给操作系统
 }
