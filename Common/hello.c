@@ -36,14 +36,17 @@ int main(void)
     long double x2 = 1.0L; // 92
 
     double test_float1 = 10.1234567f;
-    float test_float2 = 4.0f;
+    float test_float2 = 4.1542343f;
     float test_float3 = 0.0f;
 
 
     
     char salary = 1;
-    printf("test_float1 is %.99f, test_float2 is %.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
-
+    // .3 为小数点后3位保留,省略掉的会四舍五入
+    // printf("test_float1 is %.4f, test_float2 is %.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
+    // %10.3f 为小数点后三位，总长为10位，不够10位的，左边补空格
+    // 如果想要左对齐, %-10.3f,右边补空格
+    printf("test_float1 is %10.4f, test_float2 is %-10.3f, test_float3 is %.9f", test_float1, test_float2, test_float3);
     // printf("My salary is %s \n", salary);
     // printf("hello world!! \" %s\"  \t testtt \n", ZSW_NAME); // the quotation is like java's
     // printf("first string is %d" "second string is %d", 
