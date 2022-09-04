@@ -3,7 +3,9 @@
  * Copyright 2022
  */
 #include <stdio.h>
-
+#include <limits.h>
+#include <float.h>
+#include <stddef.h>
 #define ZSW_NAME  "zsw"
 
 /*************************************
@@ -43,23 +45,55 @@ int main(void)
      * 获取各种类型的数值所用得格式说明符, &为寻址运算符
      */
     // short类型
-    scanf("%hd", &b);
-    // int
-    scanf("%d", &c);
-    // long
-    scanf("%ld", &d);
-    scanf("%lld", &e);
-    scanf("%f", &f1);
-    // double
-    scanf("%lf", &x1);
+//    scanf("%hd", &b);
+//    // int
+//    scanf("%d", &c);
+//    // long
+//    scanf("%ld", &d);
+//    scanf("%lld", &e);
+//    scanf("%f", &f1);
+//    // double
+//    scanf("%lf", &x1);
 
+    /**
+     * 头文件limits.h中的类型极限值
+     */
+    int max = INT_MAX;
+    float fmax = FLT_MAX;
+    /**
+     * 单精度浮点数的尾数所精确的10进制小数位数，比如float为7，double为15，在float.h中定义
+     */
+    float fdig = FLT_DIG;
+
+    /**
+     * 类型所占字节数，stddef.h中的方法
+     */
+    size_t size = sizeof(long long);
+    // 输出变量所占字节数
+    size_t f = sizeof test_float3;
+
+
+
+    printf("size of float is %u \n", sizeof(float));
+    // 内存地址
+    printf("size of float is %p \n", &size);
+
+
+    // 数组的集中声明方式
+    int arr[10];
+    printf("size of arr is %u \n", sizeof arr);
+
+    int arr2[5] = {1, 2, 3, 4, 5};
+    for (int i = 0; i < sizeof arr2 / sizeof(arr2[0]); ++i) {
+        printf("%d \n", arr2[i]);
+    }
 
 
 
 //    char inputString = '1';
 //    scanf("%f", &test_float3);
 
-    printf("input is %3.1f", test_float3);
+//    printf("input is %3.1f", test_float3);
     
     char salary = 1;
     // .3 为小数点后3位保留,省略掉的会四舍五入
