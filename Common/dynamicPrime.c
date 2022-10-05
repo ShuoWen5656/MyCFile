@@ -38,6 +38,11 @@ int main(void){
     // 分配内存
     p_prime = malloc(total*sizeof(int));
 
+
+//    p_prime = calloc(total, sizeof(int));
+
+    // 扩容
+//    realloc(p_prime, total + 2);
     // 如果分配失败会返回null
     if (!p_prime){
         printf("fail to malloc");
@@ -74,6 +79,9 @@ int main(void){
         }
     }
 
+    // 释放内存
+    free(p_prime);
+    p_prime = NULL;
 
 
 
