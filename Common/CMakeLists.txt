@@ -3,4 +3,4 @@ project(MyCProject C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(MyCProject dynamicPrime.c)
+add_executable(MyCProject FunctionTest.c)
