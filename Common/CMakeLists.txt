@@ -3,4 +3,4 @@ project(MyCProject C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(MyCProject FunctionTest.c)
+add_executable(MyCProject test_io.c)
