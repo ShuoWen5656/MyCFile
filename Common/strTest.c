@@ -59,7 +59,8 @@ int main(void){
         dstrp = ptr;
     }
 
-
+    // 10个char[]数组类型的指针
+    char *p_chars[10] = {NULL};
 
 
 //    printf_s("this is \" %s \" \n", str);
