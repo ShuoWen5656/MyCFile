@@ -11,16 +11,26 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "data_struct/arraylist/arraylist.h"
 
 int main(void){
 
 
-    char str[] = "my string 666\n";
+//    char str[] = "my string 666\n";
+//
+//    char str2[][40] = {
+//            "my first str",
+//            "my second str"
+//    };
 
-    char str2[][40] = {
-            "my first str",
-            "my second str"
-    };
+    ArrayList* list = NULL;
+    list = malloc(sizeof(list));
+    list->len = 10;
+    printf("%d", list->len);
+    free((void*)list);
+    list = NULL;
+
+
 
     // 测试指针
 //    char a = 'a';
@@ -42,25 +52,25 @@ int main(void){
 //    }
 
 
-    char dstr[] = "0.2 0.5 0.7";
-
-
-    // 滑动指针,存储的应该是数组中的地址
-    char* ptr = NULL;
-    char* dstrp = dstr;
-
-    while (true){
-        // 给地址的地址到函数中，函数更改地址指向的内容
-        double value = strtod(dstrp, &ptr);
-        if (ptr == dstrp){
-            break;
-        }
-        printf("%f \n", value);
-        dstrp = ptr;
-    }
-
-    // 10个char[]数组类型的指针
-    char *p_chars[10] = {NULL};
+//    char dstr[] = "0.2 0.5 0.7";
+//
+//
+//    // 滑动指针,存储的应该是数组中的地址
+//    char* ptr = NULL;
+//    char* dstrp = dstr;
+//
+//    while (true){
+//        // 给地址的地址到函数中，函数更改地址指向的内容
+//        double value = strtod(dstrp, &ptr);
+//        if (ptr == dstrp){
+//            break;
+//        }
+//        printf("%f \n", value);
+//        dstrp = ptr;
+//    }
+//
+//    // 10个char[]数组类型的指针
+//    char *p_chars[10] = {NULL};
 
 
 //    printf_s("this is \" %s \" \n", str);
