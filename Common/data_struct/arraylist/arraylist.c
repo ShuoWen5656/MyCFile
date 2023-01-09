@@ -108,33 +108,90 @@ int array_list_insert(ArrayList *list, void* p_data, long index){
  * @param index
  * @return 直接返回数据指针
  */
-void* array_list_get(ArrayList* list, unsigned long index);
+void* array_list_get(ArrayList* list, unsigned long index) {
+    // 参数校验
+    if (NULL == list || index < -1 || index >= list->len) {
+        return NULL;
+    }
+    // index = -1 返回最后一个元素
+    return index == -1 ? list->datas[list->len-1].data : list->datas[index].data;
+}
 
 /**
  * 删除元素
  * @param list
  * @param index
  */
-void array_list_remove_at(ArrayList* list, unsigned long index);
+void array_list_remove_at(ArrayList* list, unsigned long index) {
+    // 参数校验
+    if (NULL == list || index < -1 || index >= list->len) {
+        return NULL;
+    }
+    if (index == -1) {
+        // 删除最后一个元素
+        list->datas[list->len-1] = NULL;
+        return;
+    }
+    // 删除元素，将元素覆盖过来即可
+    int next = index+1;
+    for (; next < list->len; ++next) {
+        list->datas[i-1] = list->datas[i];
+    }
+    // 将最后一个元素变成null
+    list->datas[next] = NULL;
+    list->len--;
+    return;
+}
 
 /**
  * 清空数组元素，不释放内存
  * @param list
  */
-void array_list_clear(ArrayList* list);
+void array_list_clear(ArrayList* list) {
+    if (NULL == list) {
+        return;
+    }
+    // 将每一个data都指向NULL
+    int i = 0;
+    for (i = 0; i < list->len; ++i) {
+        list->datas[i] = NULL;
+    }
+    // 长度改变
+    list->len = 0;
+    return;
+}
 
 /**
  * 释放数组内存
  * @param list
  */
-void array_list_free(ArrayList* list);
+void array_list_free(ArrayList* list) {
+    if (NULL == list) {
+        return;
+    }
+    // 先释放list中的datas
+    if (list->datas != NULL) {
+        free(list->datas);
+    }
+    free(list);
+    return;
+}
 
 /**
  * 判空
  * @param list
  * @return
  */
-int array_list_is_empty(ArrayList* list);
+int array_list_is_empty(ArrayList* list) {
+    if (NULL == list) {
+        return -1;
+    }
+    if (list->len == 0) {
+        return 1;
+    }else {
+        return -1;
+    }
+}
 
 
 
