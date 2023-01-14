@@ -35,7 +35,7 @@ ArrayList* init_array_list(){
     for (i = 0; i < INIT_SIZE; ++i)
     {
         // 地址给0相当于null
-        list->datas[i] = 0;
+        list->datas[i].data = 0;
     }
     // 元素长度
     list->len = 0;
@@ -56,7 +56,7 @@ int array_list_insert(ArrayList *list, void* p_data, long index){
     int relloc_size = 0;
     // 参数校验.list不为null，index不可以越界
     if (NULL == list || index < -1 || index >= list->len) {
-        return -1
+        return -1;
     }
     // 判断扩容,未插入前如果长度还剩一个位置，则开始扩容
     if (list->len == list -> size - 1) {
@@ -71,33 +71,33 @@ int array_list_insert(ArrayList *list, void* p_data, long index){
             return -1;
         }
         // 重新分配内存
-        list->datas = realloc(list->datas, sizeof(data) * newCapacity);
+        list->datas = realloc(list->datas, sizeof(Data) * newCapacity);
         if (NULL == list->datas) {
             // 分配内存失败
             return -1;
         }
         // 新分配的内存需要初始化
         for (int i = list->len; i < list->len; ++i) {
-            list->datas[i] = 0;
+            list->datas[i].data = 0;
         }
         list->size = newCapacity;
     }
     // 放入新的data
     if (-1 == index) {
         // 插入尾部
-        list->datas[list->len] = p_data;
+        list->datas[list->len].data = p_data;
     }else {
         // 插入指定位置
-        Data* tem = p_data;
-        Data* tem2 = NULL;
+        void* tem = p_data;
+        void* tem2 = NULL;
         for (int i = index; i <= list->len; ++i) {
-            tem2 = list->datas[i];
-            list->datas[i] = tem;
+            tem2 = list->datas[i].data;
+            list->datas[i].data = tem;
             tem = tem2;
         }
     }
     list->len++;
-    return 0;
+    return 1;
 }
 
 
@@ -108,7 +108,7 @@ int array_list_insert(ArrayList *list, void* p_data, long index){
  * @param index
  * @return 直接返回数据指针
  */
-void* array_list_get(ArrayList* list, unsigned long index) {
+void* array_list_get(ArrayList* list, long index) {
     // 参数校验
     if (NULL == list || index < -1 || index >= list->len) {
         return NULL;
@@ -122,23 +122,23 @@ void* array_list_get(ArrayList* list, unsigned long index) {
  * @param list
  * @param index
  */
-void array_list_remove_at(ArrayList* list, unsigned long index) {
+void array_list_remove_at(ArrayList* list, long index) {
     // 参数校验
     if (NULL == list || index < -1 || index >= list->len) {
-        return NULL;
+        return;
     }
     if (index == -1) {
         // 删除最后一个元素
-        list->datas[list->len-1] = NULL;
+        list->datas[list->len-1].data = NULL;
         return;
     }
     // 删除元素，将元素覆盖过来即可
     int next = index+1;
     for (; next < list->len; ++next) {
-        list->datas[i-1] = list->datas[i];
+        list->datas[next-1].data = list->datas[next].data;
     }
     // 将最后一个元素变成null
-    list->datas[next] = NULL;
+    list->datas[next].data = NULL;
     list->len--;
     return;
 }
@@ -154,7 +154,7 @@ void array_list_clear(ArrayList* list) {
     // 将每一个data都指向NULL
     int i = 0;
     for (i = 0; i < list->len; ++i) {
-        list->datas[i] = NULL;
+        list->datas[i].data = NULL;
     }
     // 长度改变
     list->len = 0;
@@ -194,6 +194,25 @@ int array_list_is_empty(ArrayList* list) {
 }
 
 
+
+
+/**
+ * 测试用例
+ * @return
+ */
+int main(void) {
+
+    ArrayList* list = init_array_list();
+    int i = 100;
+    array_list_insert(list, &i,-1);
+    if (array_list_is_empty(list) == -1) {
+        printf("the list is empty \n");
+    }
+    array_list_clear(list);
+    i=200;
+    array_list_insert(list, &i,-1);
+    printf("the first num is %d \n", *(int*)array_list_get(list, 0));
+}
 
 
 

@@ -85,14 +85,14 @@ int array_list_insert(ArrayList *list, void* p_data, long index);
  * @param index
  * @return 直接返回数据指针
  */
-void* array_list_get(ArrayList* list, unsigned long index);
+void* array_list_get(ArrayList* list, long index);
 
 /**
  * 删除元素
  * @param list
  * @param index
  */
-void array_list_remove_at(ArrayList* list, unsigned long index);
+void array_list_remove_at(ArrayList* list, long index);
 
 /**
  * 清空数组元素，不释放内存
