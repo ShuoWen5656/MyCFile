@@ -16,8 +16,8 @@
 
 /**
  * 初始化列表:申请一块内存并初始化完成后，将内存的地址返回
- * 1、给list数组分配内存
- * 2、初始化各变量长度
+ * 1、Arraylist结构分配一波内存
+ * 2、给ArrayList结构中的data指针分配一波内存用来存储data结构列表
  * @return 成功时返回ArrayList结构地址
  */
 ArrayList* init_array_list(){
@@ -35,6 +35,9 @@ ArrayList* init_array_list(){
     for (i = 0; i < INIT_SIZE; ++i)
     {
         // 地址给0相当于null
+        // datas[i] 当指针通过数组访问返回的引用，不是地址，该引用直接表示了data，所以这里使用"."来访问data
+        // 但是list是指针，表示的是地址，通过地址直接访问datas成员时，就需要使用"->"来访问
+        // datas[i].data等价与 (&datas[i]) -> data，先取到引用的地址再访问data
         list->datas[i].data = 0;
     }
     // 元素长度

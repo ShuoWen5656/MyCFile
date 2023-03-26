@@ -30,6 +30,7 @@ typedef struct Stack {
 
 /**
  * 初始化栈结构
+ * 相当于new
  * @return
  */
 Stack* stack_init();
