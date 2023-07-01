@@ -40,6 +40,7 @@ Stack* stack_init() {
 int stack_push(Stack* stack, void* p_data) {
     // 拿出主角出来操作
     ArrayList* arrayList = stack->arrayList;
+    // 将当前元素添加到list的尾部
     return array_list_insert(arrayList, p_data, -1);
 }
 
@@ -48,8 +49,17 @@ int stack_push(Stack* stack, void* p_data) {
  * @param stack
  * @return
  */
-int stack_poll(Stack* stack) {
-    return 0;
+void* stack_poll(Stack* stack) {
+    ArrayList* arrayList = stack->arrayList;
+    // 获取尾巴元素所在的内存地址
+    void* res = array_list_get(arrayList, -1);
+    if (res == NULL) {
+        // 地址为0
+        return 0;
+    }
+    // 将尾巴的元素删除
+    array_list_remove_at(arrayList, -1);
+    return res;
 }
 
 /**
@@ -58,7 +68,8 @@ int stack_poll(Stack* stack) {
  * @return
  */
 int stack_is_empty(Stack* stack) {
-    return 0;
+    ArrayList* arrayList = stack->arrayList;
+    return array_list_is_empty(arrayList);
 }
 
 /**
@@ -66,8 +77,9 @@ int stack_is_empty(Stack* stack) {
  * @param stack
  * @return
  */
-int stack_peek(Stack* stack) {
-    return 0;
+void* stack_peek(Stack* stack) {
+    ArrayList* arrayList = stack->arrayList;
+    return array_list_get(arrayList, -1);
 }
 
 /**
@@ -75,6 +87,10 @@ int stack_peek(Stack* stack) {
  * @param stack
  */
 void stack_clear(Stack* stack) {
+    ArrayList* arrayList = stack->arrayList;
+    // 先清空arraylist中的元素
+    array_list_clear(arrayList);
+    // stack不用清空
     return;
 }
 
@@ -83,8 +99,34 @@ void stack_clear(Stack* stack) {
  * @param stack
  */
 void stack_free(Stack* stack) {
+    if (stack == NULL){
+        return;
+    }
+    ArrayList* arrayList = stack->arrayList;
+    // 释放arr中的内存
+    if (arrayList != NULL) {
+        array_list_free(arrayList);
+    }
+    free(stack);
     return;
 }
 
+
+/**
+ * 测试用例
+ * @return
+ */
+int main() {
+
+    Stack* stack = stack_init();
+    int ints[3] = {1,2,3};
+    int len = 3;
+    for (int i = 0; i < len; i++) {
+        stack_push(stack, &ints[i]);
+    }
+    for (int i = 0; i < len; i++) {
+        printf("first is  %d", *(int*)stack_poll(stack));
+    }
+}
 
 

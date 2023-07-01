@@ -48,7 +48,7 @@ int stack_push(Stack* stack, void* p_data);
  * @param stack
  * @return
  */
-int stack_poll(Stack* stack);
+void* stack_poll(Stack* stack);
 
 /**
  * 判断栈是否为空
@@ -62,7 +62,7 @@ int stack_is_empty(Stack* stack);
  * @param stack
  * @return
  */
-int stack_peek(Stack* stack);
+void* stack_peek(Stack* stack);
 
 /**
  * 清空栈
