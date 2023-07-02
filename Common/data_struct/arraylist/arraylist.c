@@ -133,6 +133,7 @@ void array_list_remove_at(ArrayList* list, long index) {
     if (index == -1) {
         // 删除最后一个元素
         list->datas[list->len-1].data = NULL;
+        list->len--;
         return;
     }
     // 删除元素，将元素覆盖过来即可
@@ -203,19 +204,19 @@ int array_list_is_empty(ArrayList* list) {
  * 测试用例
  * @return
  */
-int main(void) {
-
-    ArrayList* list = init_array_list();
-    int i = 100;
-    array_list_insert(list, &i,-1);
-    if (array_list_is_empty(list) == -1) {
-        printf("the list is empty \n");
-    }
-    array_list_clear(list);
-    i=200;
-    array_list_insert(list, &i,-1);
-    printf("the first num is %d \n", *(int*)array_list_get(list, 0));
-}
+//int main(void) {
+//
+//    ArrayList* list = init_array_list();
+//    int i = 100;
+//    array_list_insert(list, &i,-1);
+//    if (array_list_is_empty(list) == -1) {
+//        printf("the list is empty \n");
+//    }
+//    array_list_clear(list);
+//    i=200;
+//    array_list_insert(list, &i,-1);
+//    printf("the first num is %d \n", *(int*)array_list_get(list, 0));
+//}
 
 
 
