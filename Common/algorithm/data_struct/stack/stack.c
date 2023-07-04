@@ -112,21 +112,21 @@ void stack_free(Stack* stack) {
 }
 
 
-/**
- * 测试用例
- * @return
- */
-int main() {
-
-    Stack* stack = stack_init();
-    int ints[3] = {1,2,3};
-    int len = 3;
-    for (int i = 0; i < len; i++) {
-        stack_push(stack, &ints[i]);
-    }
-    for (int i = 0; i < len; i++) {
-        printf("first is  %d", *(int*)stack_poll(stack));
-    }
-}
+///**
+// * 测试用例
+// * @return
+// */
+//int main() {
+//
+//    Stack* stack = stack_init();
+//    int ints[3] = {1,2,3};
+//    int len = 3;
+//    for (int i = 0; i < len; i++) {
+//        stack_push(stack, &ints[i]);
+//    }
+//    for (int i = 0; i < len; i++) {
+//        printf("first is  %d", *(int*)stack_poll(stack));
+//    }
+//}
 
 
