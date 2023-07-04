@@ -188,12 +188,12 @@ void array_list_free(ArrayList* list) {
  */
 int array_list_is_empty(ArrayList* list) {
     if (NULL == list) {
-        return -1;
+        return 0;
     }
     if (list->len == 0) {
         return 1;
     }else {
-        return -1;
+        return 0;
     }
 }
 

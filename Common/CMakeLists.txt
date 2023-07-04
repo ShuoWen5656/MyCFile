@@ -5,5 +5,5 @@ project(MyCProject C)
 
 set(CMAKE_C_STANDARD 11)
 
-#add_executable(MyCProject data_struct/stack/stack.c)
-add_executable(MyCProject algorithm/data_struct/arraylist/arraylist.c algorithm)
+add_executable(MyCProject algorithm/stack_and_queue/my_stack/min_stack.c algorithm/data_struct/arraylist/arraylist.c algorithm/data_struct/stack/stack.c )
+#add_executable(MyCProject algorithm/data_struct/arraylist/arraylist.c algorithm)

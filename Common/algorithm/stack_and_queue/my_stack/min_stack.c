@@ -7,6 +7,7 @@
 
 #include "min_stack.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /*****************************************************************************************************
  * 由于C++编译器支持重载，函数名称会做一些处理，而在c中仅是简单函数名，这里定义为了告诉c++编译器按照C语言的方式编译即可*
@@ -47,10 +48,10 @@ void min_stack_push(MinStack* minStack, void* data) {
     }else {
         // 先正常入栈
         stack_push(stack, data);
-        int peek = stack_peek(mStack);
+        int peek = *(int*)stack_peek(mStack);
         if (cur < peek) {
             // 入栈
-            stack_push(stack, data);
+            stack_push(mStack, data);
         }
     }
 }
@@ -86,6 +87,17 @@ int min_stack_get_min(MinStack* minStack) {
     return *(int*) stack_peek(minStack->minStack);
 }
 
+void min_stack_free(MinStack* minStack) {
+    Stack* stack = minStack->stack;
+    Stack* m_stack = minStack->minStack;
+    if (stack != NULL) {
+        stack_free(stack);
+    }
+    if (m_stack != NULL) {
+        stack_free(m_stack);
+    }
+    free(minStack);
+}
 
 
 /**
@@ -93,8 +105,21 @@ int min_stack_get_min(MinStack* minStack) {
  * @return
  */
 int main() {
-    return 0;
+    setbuf(stdout, NULL);
+
+    int arr[] = {5,3,6,1,2};
+    int len = 5;
+    MinStack* minStack = min_stack_init();
+    for (int i = 0; i < len; i++) {
+        min_stack_push(minStack, &arr[i]);
+    }
+    printf("min is %d \n", min_stack_get_min(minStack));
+    min_stack_poll(minStack);
+    printf("min2 is %d \n", min_stack_get_min(minStack));
+    min_stack_free(minStack);
 }
+
+
 
 
 
