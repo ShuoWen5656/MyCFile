@@ -6,7 +6,7 @@
 #define MYCPROJECT_STACK_H
 
 
-#include "../arraylist/arraylist.h"
+#include "arraylist.h"
 #include "stdbool.h"
 
 #endif //MYCPROJECT_STACK_H

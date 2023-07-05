@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "data_struct/arraylist/arraylist.h"
+#include "algorithm/data_struct/arraylist/arraylist.h"
 
 int main(void){
 
