@@ -104,20 +104,20 @@ void min_stack_free(MinStack* minStack) {
  * 测试用例
  * @return
  */
-int main() {
-    setbuf(stdout, NULL);
-
-    int arr[] = {5,3,6,1,2};
-    int len = 5;
-    MinStack* minStack = min_stack_init();
-    for (int i = 0; i < len; i++) {
-        min_stack_push(minStack, &arr[i]);
-    }
-    printf("min is %d \n", min_stack_get_min(minStack));
-    min_stack_poll(minStack);
-    printf("min2 is %d \n", min_stack_get_min(minStack));
-    min_stack_free(minStack);
-}
+//int main() {
+//    setbuf(stdout, NULL);
+//
+//    int arr[] = {5,3,6,1,2,7};
+//    int len = 5;
+//    MinStack* minStack = min_stack_init();
+//    for (int i = 0; i < len; i++) {
+//        min_stack_push(minStack, &arr[i]);
+//    }
+//    printf("min is %d \n", min_stack_get_min(minStack));
+//    min_stack_poll(minStack);
+//    printf("min2 is %d \n", min_stack_get_min(minStack));
+//    min_stack_free(minStack);
+//}
 
 
 

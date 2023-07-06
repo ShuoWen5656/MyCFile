@@ -7,7 +7,7 @@
 
 #endif //MYCPROJECT_MY_STACK_H
 
-#include "../../data_struct/stack/stack.h"
+#include "stack.h"
 
 
 /*****************************************************************************************************

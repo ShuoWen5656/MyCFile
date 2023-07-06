@@ -10,7 +10,7 @@ message(${PROJECT_SOURCE_DIR})
 #FILE(GLOB DIR ${PROJECT_SOURCE_DIR}/*.c})
 #FILE(GLOB_RECURSE DIR  ${PROJECT_SOURCE_DIR}/*.c)
 FILE(GLOB_RECURSE DIR  ${PROJECT_SOURCE_DIR}/algorithm/*.c)
-include_directories("algorithm/data_struct/arraylist/")
+include_directories("algorithm/include/")
 add_executable(MyCProject ${DIR})
 #add_executable(MyCProject algorithm/data_struct/arraylist/arraylist.c algorithm)
 
@@ -52,3 +52,44 @@ add_executable(MyCProject ${DIR})
 #        POST_BUILD # 在目标文件model build之后，执行下面的拷贝命令，还可以选择PRE_BUILD命令将会在其他依赖项执行前执行  PRE_LINK命令将会在其他依赖项执行完后执行   POST_BUILD命令将会在目标构建完执行
 #        COMMAND cp  ./model ../
 #        )
+
+
+# 三方库链接方式
+#cmake_minimum_required(VERSION 3.7)
+##项目名字
+#project(deadcode)
+##设置编译版本
+#set (CMAKE_CXX_STANDARD 14)
+## 1.自己项目的头文件和cpp
+#set(SOURCE_FILES
+#        src/trace/cpps/main.cpp
+#        src/trace/headers/directory_iterator.h src/trace/cpps/directory_iterator.cpp
+#        src/trace/headers/file_reader.h src/trace/cpps/file_reader.cpp
+#        src/trace/headers/reader.h src/trace/cpps/reader.cpp
+#        src/trace/headers/record_file_reader.h src/trace/headers/record_file_reader.cpp
+#        src/trace/headers/memref.h src/trace/headers/memtrace_stream.h src/trace/headers/utils.h
+#        src/trace/headers/trace_entry.h src/trace/cpps/trace_entry.cpp
+#        src/trace/headers/analyzer.h src/trace/cpps/analyzer.cpp
+#        src/trace/headers/analyzer_runner.h src/trace/cpps/analyzer_runner.cpp
+#        src/trace/headers/analysis_tool.h
+#        src/trace/headers/dead_code_analysis.h src/trace/cpps/dead_code_analysis.cpp)
+#​
+## 2.下载的外部库
+### 外部库的头文件
+#set(ZLIB_INCLUDE C:/Users/29185/Desktop/2023/GEARS/dead_code/src/xed/include)
+### 外部库的lib文件（静态编译）
+#set(ZLIB_LIBRARIES C:/Users/29185/Desktop/2023/GEARS/dead_code/src/xed/lib)
+#​
+## 3.加载线程库
+#find_package (Threads)
+#​
+## 设置项目输出
+#set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+## 链接外部库
+#include_directories(${ZLIB_INCLUDE})
+#link_directories(${ZLIB_LIBRARIES})
+#​
+## 设置编译文件
+#add_executable(deadcode ${SOURCE_FILES})
+##将第三方库链接在一起
+#target_link_libraries (${PROJECT_NAME} libxed.a Threads::Threads)

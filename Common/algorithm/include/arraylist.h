@@ -28,7 +28,7 @@ extern "C"
  * 列表初始化配置
  */
 // 列表的初始化大小
-#define INIT_SIZE 15
+#define INIT_SIZE 5
 // 扩容倍数
 #define INCREASE_PERC 1.5
 

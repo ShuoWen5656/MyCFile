@@ -66,7 +66,7 @@ int array_list_insert(ArrayList *list, void* p_data, long index){
         // 判断1.5倍是否越界
         int newCapacity = list->size * INCREASE_PERC;
         if (newCapacity - INT_MAX > 0) {
-            // 新的数组越界了,则线性增加
+            // 如果新的数组越界了则为负数,则线性增加
             newCapacity = list->size+1;
         }
         if (newCapacity - INT_MAX > 0) {
@@ -80,7 +80,7 @@ int array_list_insert(ArrayList *list, void* p_data, long index){
             return -1;
         }
         // 新分配的内存需要初始化
-        for (int i = list->len; i < list->len; ++i) {
+        for (int i = list->len; i < list->size; ++i) {
             list->datas[i].data = 0;
         }
         list->size = newCapacity;
@@ -204,19 +204,26 @@ int array_list_is_empty(ArrayList* list) {
  * 测试用例
  * @return
  */
-//int main(void) {
-//
-//    ArrayList* list = init_array_list();
-//    int i = 100;
+int main(void) {
+    setbuf(stdout, NULL);
+    ArrayList* list = init_array_list();
+    int ints[] = {5,4,6,3,4,5,6};
+    int len = 7;
+    for (int i = 0; i < len; ++i) {
+        array_list_insert(list, &ints[i], -1);
+    }
 //    array_list_insert(list, &i,-1);
-//    if (array_list_is_empty(list) == -1) {
-//        printf("the list is empty \n");
-//    }
+    if (array_list_is_empty(list) == -1) {
+        printf("the list is empty \n");
+    }
+    for (int j = 0; j < len; ++j) {
+        printf("the %d num is %d \n", j,*(int*)array_list_get(list, j));
+    }
 //    array_list_clear(list);
 //    i=200;
 //    array_list_insert(list, &i,-1);
 //    printf("the first num is %d \n", *(int*)array_list_get(list, 0));
-//}
+}
 
 
 
