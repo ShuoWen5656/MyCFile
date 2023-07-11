@@ -7,6 +7,8 @@
 
 #endif //MYCPROJECT_HASHMAP_H
 
+#include "arraylist.h"
+#include "stdbool.h"
 /*****************************************************************************************************
  * 由于C++编译器支持重载，函数名称会做一些处理，而在c中仅是简单函数名，这里定义为了告诉c++编译器按照C语言的方式编译即可*
  *****************************************************************************************************/
@@ -36,6 +38,10 @@ typedef struct Node Node;
  * hashmap数据结构
  */
 typedef struct HashMap HashMap;
+/**
+ * 键值对结构（仅存储键值对）
+ */
+typedef struct Entry Entry;
 
 
 struct Node {
@@ -45,15 +51,84 @@ struct Node {
     Node* next;
 };
 
-struct HashMap {
 
+
+struct HashMap {
+    // hashtable主体
+    Node* nodelist;
+    // 维护键值对
+    ArrayList* entrySet;
+    // kv个数
+    int len;
+
+};
+
+struct Entry {
+    void* key;
+    void* data;
 };
 
 
 
+/**
+ * put键值对
+ * @param hashMap
+ * @param key
+ * @param value
+ */
+void hashmap_put(HashMap* hashMap, void* key, void* value);
+
+/**
+ * 获取某个key的键
+ * @param hashMap
+ * @param key
+ * @return
+ */
+void* hashmap_get(HashMap* hashMap, void* key);
+
+/**
+ * 判断是否在hashmap中
+ * @param hashMap
+ * @param key
+ * @return
+ */
+int hashmap_contains(HashMap* hashMap, void* key);
+
+/**
+ * 计算当前key的hashcode
+ * @param key
+ * @return
+ */
+int hashmap_hashcode(void* key);
 
 
+/**
+ * 获取keyset
+ * @param hashMap
+ * @return
+ */
+ArrayList* hashmap_key_set(HashMap* hashMap);
 
+/**
+ * 获取values
+ * @param hashMap
+ * @return
+ */
+ArrayList* hashmap_values(HashMap* hashMap);
+
+/**
+ * 获取values
+ * @param hashMap
+ * @return
+ */
+ArrayList* hashmap_entry_set(HashMap* hashMap);
+
+
+/**
+ * entry之间是否相等
+ */
+
+int entry_equals(Entry* entry1, Entry* entry2);
 
 
 
