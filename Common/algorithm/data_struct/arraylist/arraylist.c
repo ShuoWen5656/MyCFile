@@ -37,7 +37,7 @@ ArrayList* init_array_list(){
         // 地址给0相当于null
         // datas[i] 当指针通过数组访问返回的引用，不是地址，该引用直接表示了data，所以这里使用"."来访问data
         // 但是list是指针，表示的是地址，通过地址直接访问datas成员时，就需要使用"->"来访问
-        // datas[i].data等价与 (&datas[i]) -> data，先取到引用的地址再访问data
+        // datas[i].data等价与 (&datas[i]) -> value，先取到引用的地址再访问data
         list->datas[i].data = 0;
     }
     // 元素长度

@@ -27,7 +27,7 @@ extern "C"
 // 数组最大值2^30
 #define MAXIMUM_CAPACITY 1<<30
 // 数组的初始化容量
-#define DEFAULT_INITIAL_CAPACITY 1<<4
+#define DEFAULT_INITIAL_CAPACITY 16
 // 默认单链表超过该值时使用红黑树
 #define MIN_TREEIFY_CAPACITY 64
 /**
@@ -45,9 +45,9 @@ typedef struct Entry Entry;
 
 
 struct Node {
-    int hashCode;
+    unsigned int hashCode;
     void* key;
-    void* data;
+    void* value;
     Node* next;
 };
 
@@ -58,9 +58,10 @@ struct HashMap {
     Node* nodelist;
     // 维护键值对
     ArrayList* entrySet;
-    // kv个数
-    int len;
-
+    /**
+     * 代表node列表长度
+     */
+    int nodeListSize;
 };
 
 struct Entry {
@@ -69,6 +70,11 @@ struct Entry {
 };
 
 
+/**
+ * 初始化hashmap
+ * @return
+ */
+HashMap* hashmap_init();
 
 /**
  * put键值对
@@ -76,7 +82,7 @@ struct Entry {
  * @param key
  * @param value
  */
-void hashmap_put(HashMap* hashMap, void* key, void* value);
+int hashmap_put(HashMap* hashMap, void* key, void* value);
 
 /**
  * 获取某个key的键
@@ -99,7 +105,7 @@ int hashmap_contains(HashMap* hashMap, void* key);
  * @param key
  * @return
  */
-int hashmap_hashcode(void* key);
+unsigned int hashmap_hashcode(void* key, int size);
 
 
 /**
