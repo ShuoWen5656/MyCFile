@@ -33,10 +33,13 @@ HashMap* hashmap_init(){
     for (int i = 0; i < hashMap->nodeListSize; i++) {
         hashMap->nodelist[i].key = 0;
     }
+    // 默认table的75%为扩容阈值
+    hashMap->threshold = DEFAULT_INITIAL_CAPACITY*DEFAULT_LOAD_FACTOR;
     return hashMap;
 }
 
 
+void resize(HashMap *pMap);
 
 /**
  * put键值对
@@ -58,7 +61,6 @@ int hashmap_put(HashMap* hashMap, void* key, void* value) {
     Node* curNode = create_node(key, value, hashcode);
     // 获取当前链表的头节点
     Node node = nodes[index];
-    // todo 考虑一下扩容时问题
     if (node.key == 0) {
         // 说明当前列表为空,则当前节点就是头结点
         nodes[index].key = curNode->key;
@@ -66,8 +68,6 @@ int hashmap_put(HashMap* hashMap, void* key, void* value) {
         nodes[index].hashCode = curNode->hashCode;
         nodes[index].next = curNode->next;
         // 加入entryset
-        array_list_insert(entrySet, curNode, -1);
-        return 1;
     }else{
         // hash冲突，则加入链表结尾即可
         // 找到单链表结尾
@@ -75,9 +75,76 @@ int hashmap_put(HashMap* hashMap, void* key, void* value) {
             node = *node.next;
         }
         node.next = curNode;
-        array_list_insert(entrySet, curNode, -1);
-        return 1;
     }
+    // 加入entryset
+    array_list_insert(entrySet, curNode, -1);
+    // 考虑扩容
+    if (entrySet->size > hashMap->threshold) {
+        resize(hashMap);
+    }
+}
+
+/**
+ * 扩容hashmap
+ * 1、首先将数组扩容到原来的两倍（注意越界问题）
+ * 2、数组长度永远都是2的幂次方，所以newlen = oldlen*2 = 00100000
+ * oldlen = 00010000
+ * 3、遍历所有的元素，对于每一个单链表来讲，遍历节点的hashcode，计算hashcode*oldlen，如果是1则作为高位元素(index+oldlen)，如果是0作为低位元素（index）
+ * @param pMap
+ */
+void resize(HashMap *hashMap) {
+    // 此处需要校验一下越界
+    int oldCap = hashMap->nodeListSize;
+    if (oldCap == INT_MAX) {
+        // 已经最大值，则不用扩容了
+        return;
+    }
+    int newCap = oldCap * 2 > INT_MAX ? INT_MAX : oldCap * 2;
+    Node* nodelist = hashMap->nodelist;
+    // 申请新的内存
+    Node* newNodeList = calloc(newCap, sizeof(Node));
+    // 遍历所有节点
+    for (int i = 0; i < oldCap; i++){
+        // 低位头尾
+        Node* lowHead = NULL;
+        Node* lowTail = NULL;
+        // 高位头尾
+        Node* highHead = NULL;
+        Node* highTail = NULL;
+        // 取出当前列表头结点
+        Node* cur = &nodelist[i];
+        while (cur != NULL) {
+            unsigned int hashCode = cur->hashCode;
+            if ((hashCode & (unsigned)oldCap) == 0) {
+                // 低位
+                if (lowHead == NULL) {
+                    // 初始化
+                    lowHead = cur;
+                    lowTail = cur;
+                }else {
+                    lowTail->next = cur;
+                }
+            }else {
+                // 高位
+                if (highHead == NULL) {
+                    highHead = cur;
+                    highTail = cur;
+                } else{
+                    highTail->next = cur;
+                }
+            }
+            cur = cur->next;
+        }
+        // 结束之后，将高低位放回原来的地方
+        if (lowHead != NULL) {
+            newNodeList[i] = *lowHead;
+        }
+        if (highHead != NULL) {
+            newNodeList[i+oldCap] = *highHead;
+        }
+    }
+    // 结束之后将新的节点列表赋值回去
+    hashMap->nodelist = newNodeList;
 }
 
 Node *create_node(void *key, void *value, unsigned int hashcode) {

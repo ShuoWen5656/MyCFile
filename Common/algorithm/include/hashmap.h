@@ -62,6 +62,11 @@ struct HashMap {
      * 代表node列表长度
      */
     int nodeListSize;
+
+    /**
+     * 扩容阈值：超过改值时就会扩容并且更新该值X2
+     */
+    int threshold;
 };
 
 struct Entry {
