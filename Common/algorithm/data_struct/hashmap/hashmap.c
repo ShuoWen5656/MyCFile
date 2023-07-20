@@ -15,7 +15,19 @@
  ***************************************************/
 
 /********函数签名*****************/
+/**
+ * 创建一个全新节点
+ * @param pVoid
+ * @param pVoid1
+ * @param hashcode
+ * @return
+ */
 Node *create_node(void *pVoid, void *pVoid1, unsigned int hashcode);
+/**
+ * 扩容
+ * @param pMap
+ */
+void resize(HashMap *pMap);
 
 
 /**
@@ -39,7 +51,6 @@ HashMap* hashmap_init(){
 }
 
 
-void resize(HashMap *pMap);
 
 /**
  * put键值对
@@ -55,7 +66,7 @@ int hashmap_put(HashMap* hashMap, void* key, void* value) {
     Node* nodes = hashMap->nodelist;
     ArrayList* entrySet = hashMap->entrySet;
     // 计算需要放置的地方
-    unsigned int hashcode = hashmap_hashcode(key, hashMap->nodeListSize);
+    unsigned int hashcode = hashmap_hashcode(key);
     unsigned int index = hashcode % hashMap->nodeListSize;
     // 创建当前节点
     Node* curNode = create_node(key, value, hashcode);
@@ -69,17 +80,26 @@ int hashmap_put(HashMap* hashMap, void* key, void* value) {
         nodes[index].next = curNode->next;
         // 加入entryset
     }else{
-        // hash冲突，则加入链表结尾即可
-        // 找到单链表结尾
+        // hash冲突，如果存在该key的节点，则覆盖，否则加入链表结尾
+        Node* exist = NULL;
         while (node.next != NULL) {
+            if (node.key == key) {
+                // 已经存在
+                exist = &node;
+            }
             node = *node.next;
         }
-        node.next = curNode;
+        if (exist != NULL) {
+            // 已经存在key,直接修改value即可
+            exist->value = value;
+        }else{
+            node.next = curNode;
+        }
     }
     // 加入entryset
     array_list_insert(entrySet, curNode, -1);
     // 考虑扩容
-    if (entrySet->size > hashMap->threshold) {
+    if (entrySet->len > hashMap->threshold) {
         resize(hashMap);
     }
 }
@@ -90,6 +110,7 @@ int hashmap_put(HashMap* hashMap, void* key, void* value) {
  * 2、数组长度永远都是2的幂次方，所以newlen = oldlen*2 = 00100000
  * oldlen = 00010000
  * 3、遍历所有的元素，对于每一个单链表来讲，遍历节点的hashcode，计算hashcode*oldlen，如果是1则作为高位元素(index+oldlen)，如果是0作为低位元素（index）
+ * 4、新的长度更新，新的阈值更新
  * @param pMap
  */
 void resize(HashMap *hashMap) {
@@ -113,6 +134,10 @@ void resize(HashMap *hashMap) {
         Node* highTail = NULL;
         // 取出当前列表头结点
         Node* cur = &nodelist[i];
+        if (cur->hashCode == 0) {
+            // 说明当前列没有值,直接下一列
+            continue;
+        }
         while (cur != NULL) {
             unsigned int hashCode = cur->hashCode;
             if ((hashCode & (unsigned)oldCap) == 0) {
@@ -138,13 +163,18 @@ void resize(HashMap *hashMap) {
         // 结束之后，将高低位放回原来的地方
         if (lowHead != NULL) {
             newNodeList[i] = *lowHead;
+            lowTail->next = NULL;
         }
         if (highHead != NULL) {
             newNodeList[i+oldCap] = *highHead;
+            highTail->next = NULL;
         }
     }
     // 结束之后将新的节点列表赋值回去
     hashMap->nodelist = newNodeList;
+    // 更新链表长度和下一次的阈值更新
+    hashMap->nodeListSize = newCap;
+    hashMap->threshold = newCap * 2;
 }
 
 Node *create_node(void *key, void *value, unsigned int hashcode) {
@@ -163,7 +193,24 @@ Node *create_node(void *key, void *value, unsigned int hashcode) {
  * @return
  */
 void* hashmap_get(HashMap* hashMap, void* key) {
-
+    Node* nodeList =  hashMap->nodelist;
+    int nodeListSize =  hashMap->nodeListSize;
+    if (key == NULL || nodeList == NULL) {
+        return NULL;
+    }
+    // 计算index
+    uintptr_t hashcode = hashmap_hashcode(key);
+    unsigned int index = hashcode % nodeListSize;
+    Node* cur = &nodeList[index];
+    Node* target = NULL;
+    do{
+        if (cur->key == key) {
+            target = cur;
+            break;
+        }
+        cur = cur->next;
+    }while (cur != NULL);
+    return target == NULL ? NULL : target->value;
 }
 
 /**
@@ -173,7 +220,11 @@ void* hashmap_get(HashMap* hashMap, void* key) {
  * @return
  */
 int hashmap_contains(HashMap* hashMap, void* key) {
-
+    if (hashmap_get(hashMap, key) != NULL) {
+        return 1;
+    } else{
+        return 0;
+    }
 }
 
 /**
@@ -181,7 +232,7 @@ int hashmap_contains(HashMap* hashMap, void* key) {
  * @param key
  * @return
  */
-unsigned int hashmap_hashcode(void* key, int size) {
+unsigned int hashmap_hashcode(void* key) {
     // 将地址转成无符号整形，保留指针的位模式
     uintptr_t keyPtr = (uintptr_t)key;
     // 高低16位异或
@@ -196,7 +247,7 @@ unsigned int hashmap_hashcode(void* key, int size) {
  * @return
  */
 ArrayList* hashmap_key_set(HashMap* hashMap) {
-
+    return hashMap->entrySet;
 }
 
 /**
@@ -205,14 +256,22 @@ ArrayList* hashmap_key_set(HashMap* hashMap) {
  * @return
  */
 ArrayList* hashmap_values(HashMap* hashMap) {
-
+    ArrayList* entrySet = hashMap->entrySet;
+    ArrayList* res = init_array_list();
+    for (int i = 0; i < entrySet->len; i++) {
+        // 将当前元素插入到res的尾部
+        array_list_insert(res, array_list_get(entrySet, i), -1);
+    }
+    return res;
 }
 
 /**
  * entry之间是否相等
  */
 
-int entry_equals(Entry* entry1, Entry* entry2);
+int entry_equals(Entry* entry1, Entry* entry2) {
+    return entry1->key == entry2->key && entry1->data == entry2->data ? 1 : 0;
+}
 
 
 /**
@@ -220,5 +279,18 @@ int entry_equals(Entry* entry1, Entry* entry2);
  * @return
  */
 int main() {
+    // 申请一个map
+    HashMap* hashMap = hashmap_init();
+    int size = 14;
+    int keys[14] = {0};
+    int values[14] = {0};
+    for (int i = 0; i < size; i++) {
+        keys[i] = i;
+        values[i] = size-i;
+        hashmap_put(hashMap, &keys[i], &values[i]);
+    }
+    int* p1 = hashmap_get(hashMap, &keys[0]);
+    int* p2 = hashmap_get(hashMap, &keys[2]);
+
     return 0;
 }

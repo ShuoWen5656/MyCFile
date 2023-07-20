@@ -204,26 +204,26 @@ int array_list_is_empty(ArrayList* list) {
  * 测试用例
  * @return
  */
-int main(void) {
-    setbuf(stdout, NULL);
-    ArrayList* list = init_array_list();
-    int ints[] = {5,4,6,3,4,5,6};
-    int len = 7;
-    for (int i = 0; i < len; ++i) {
-        array_list_insert(list, &ints[i], -1);
-    }
-//    array_list_insert(list, &i,-1);
-    if (array_list_is_empty(list) == -1) {
-        printf("the list is empty \n");
-    }
-    for (int j = 0; j < len; ++j) {
-        printf("the %d num is %d \n", j,*(int*)array_list_get(list, j));
-    }
-//    array_list_clear(list);
-//    i=200;
-//    array_list_insert(list, &i,-1);
-//    printf("the first num is %d \n", *(int*)array_list_get(list, 0));
-}
+//int main(void) {
+//    setbuf(stdout, NULL);
+//    ArrayList* list = init_array_list();
+//    int ints[] = {5,4,6,3,4,5,6};
+//    int len = 7;
+//    for (int i = 0; i < len; ++i) {
+//        array_list_insert(list, &ints[i], -1);
+//    }
+////    array_list_insert(list, &i,-1);
+//    if (array_list_is_empty(list) == -1) {
+//        printf("the list is empty \n");
+//    }
+//    for (int j = 0; j < len; ++j) {
+//        printf("the %d num is %d \n", j,*(int*)array_list_get(list, j));
+//    }
+////    array_list_clear(list);
+////    i=200;
+////    array_list_insert(list, &i,-1);
+////    printf("the first num is %d \n", *(int*)array_list_get(list, 0));
+//}
 
 
 

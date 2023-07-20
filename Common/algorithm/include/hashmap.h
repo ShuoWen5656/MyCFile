@@ -110,7 +110,7 @@ int hashmap_contains(HashMap* hashMap, void* key);
  * @param key
  * @return
  */
-unsigned int hashmap_hashcode(void* key, int size);
+unsigned int hashmap_hashcode(void* key);
 
 
 /**
