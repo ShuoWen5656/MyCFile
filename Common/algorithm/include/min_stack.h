@@ -1,7 +1,9 @@
 //
 // Created by 赵烁文 on 2023/7/1.
 //
-
+/**
+ * 题目：设计一个有getMin功能的栈
+ */
 #ifndef MYCPROJECT_MY_STACK_H
 #define MYCPROJECT_MY_STACK_H
 

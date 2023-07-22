@@ -10,11 +10,7 @@
 
 #include "hashmap.h"
 
-/***************************************************
- *          该文件为头文件hashmap.h的方法实现            *
- ***************************************************/
-
-/********函数签名*****************/
+/********函数签名，非接口实现,不会对外暴露*****************/
 /**
  * 创建一个全新节点
  * @param pVoid
@@ -28,6 +24,17 @@ Node *create_node(void *pVoid, void *pVoid1, unsigned int hashcode);
  * @param pMap
  */
 void resize(HashMap *pMap);
+
+/**
+ * 计算当前key的hashcode
+ * @param key
+ * @return
+ */
+unsigned int hashmap_hashcode(void* key);
+
+/***************************************************
+ *          该文件为头文件hashmap.h的方法实现            *
+ ***************************************************/
 
 
 /**
@@ -104,6 +111,179 @@ int hashmap_put(HashMap* hashMap, void* key, void* value) {
     }
 }
 
+
+
+
+/**
+ * 获取某个key的键
+ * @param hashMap
+ * @param key
+ * @return
+ */
+void* hashmap_get(HashMap* hashMap, void* key) {
+    Node* nodeList =  hashMap->nodelist;
+    int nodeListSize =  hashMap->nodeListSize;
+    if (key == NULL || nodeList == NULL) {
+        return NULL;
+    }
+    // 计算index
+    uintptr_t hashcode = hashmap_hashcode(key);
+    unsigned int index = hashcode % nodeListSize;
+    Node* cur = &nodeList[index];
+    Node* target = NULL;
+    do{
+        if (cur->key == key) {
+            target = cur;
+            break;
+        }
+        cur = cur->next;
+    }while (cur != NULL);
+    return target == NULL ? NULL : target->value;
+}
+
+/**
+ * 判断是否在hashmap中
+ * @param hashMap
+ * @param key
+ * @return
+ */
+int hashmap_contains(HashMap* hashMap, void* key) {
+    if (hashmap_get(hashMap, key) != NULL) {
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+
+
+
+/**
+ * 获取keyset
+ * @param hashMap
+ * @return
+ */
+ArrayList* hashmap_key_set(HashMap* hashMap) {
+    return hashMap->entrySet;
+}
+
+/**
+ * 获取values
+ * @param hashMap
+ * @return
+ */
+ArrayList* hashmap_values(HashMap* hashMap) {
+    ArrayList* entrySet = hashMap->entrySet;
+    ArrayList* res = init_array_list();
+    for (int i = 0; i < entrySet->len; i++) {
+        // 将当前元素插入到res的尾部
+        array_list_insert(res, array_list_get(entrySet, i), -1);
+    }
+    return res;
+}
+
+
+/**
+ * entry之间是否相等
+ */
+
+int entry_equals(Entry* entry1, Entry* entry2) {
+    return entry1->key == entry2->key && entry1->data == entry2->data ? 1 : 0;
+}
+
+/**
+ * 清理hashmap中的所有元素(尽可能的保证所有的核心数据结构地址不改变)
+ * 1、清空所有单链表之后，数组的第一个元素全部初始化掉
+ * 2、entryset清空
+ * 3、长度和threshold暂时不缩容量
+ * @param hashMap
+ */
+void hashmap_clear(HashMap* hashMap) {
+    if (hashMap == NULL) {
+        return;
+    }
+    Node* nodeList = hashMap->nodelist;
+    for (int i = 0; i < hashMap->nodeListSize; ++i) {
+        Node* curNode = &nodeList[i];
+        int isFirst = 1;
+        while (curNode != NULL) {
+            curNode->hashCode = 0;
+            curNode->key = NULL;
+            curNode->value = NULL;
+            // 将下一个节点地址暂存
+            Node* next = curNode->next;
+            // 清空当前节点的next
+            curNode->next = NULL;
+            // free掉除了第一个节点的后续节点的内存
+            if (isFirst == 0) {
+                free(curNode);
+            }else {
+                isFirst = 0;
+            }
+            curNode = next;
+        }
+    }
+    // 清空entryset
+    ArrayList* entrySet = hashMap->entrySet;
+    array_list_clear(entrySet);
+}
+
+/**
+ * 释放hashmap中的所有内存
+ * 1、首先还是清空所有内容先
+ * 2、释放所有nodelist数组内存
+ * 3、释放entryset
+ * 4、释放自己
+ * @param hashMap
+ */
+void hashmap_free(HashMap* hashMap) {
+    if (hashMap == NULL) {
+        return;
+    }
+    // 1、先进行一次清空
+    hashmap_clear(hashMap);
+    // 2、释放数组内存
+    free(hashMap->nodelist);
+    // 3、释放entryset
+    free(hashMap->entrySet);
+    // 4、释放自己
+    free(hashMap);
+}
+
+
+
+
+
+
+
+/******************************************************************************************************************
+ *          一下函数为非接口实现，不对外暴露                                                                                    *
+ *******************************************************************************************************************/
+
+
+
+/**
+ * 计算当前key的hashcode
+ * @param key
+ * @return
+ */
+unsigned int hashmap_hashcode(void* key) {
+    // 将地址转成无符号整形，保留指针的位模式
+    uintptr_t keyPtr = (uintptr_t)key;
+    // 高低16位异或
+    unsigned int hashcode = keyPtr ^ (keyPtr >> 16);
+    return hashcode;
+}
+
+Node* create_node(void *key, void *value, unsigned int hashcode) {
+    Node* res = calloc(1, sizeof(Node));
+    res->key = key;
+    res->value = value;
+    res->hashCode = hashcode;
+    res->next = NULL;
+    return res;
+}
+
 /**
  * 扩容hashmap
  * 1、首先将数组扩容到原来的两倍（注意越界问题）
@@ -175,102 +355,6 @@ void resize(HashMap *hashMap) {
     // 更新链表长度和下一次的阈值更新
     hashMap->nodeListSize = newCap;
     hashMap->threshold = newCap * 2;
-}
-
-Node *create_node(void *key, void *value, unsigned int hashcode) {
-    Node* res = calloc(1, sizeof(Node));
-    res->key = key;
-    res->value = value;
-    res->hashCode = hashcode;
-    res->next = NULL;
-    return res;
-}
-
-/**
- * 获取某个key的键
- * @param hashMap
- * @param key
- * @return
- */
-void* hashmap_get(HashMap* hashMap, void* key) {
-    Node* nodeList =  hashMap->nodelist;
-    int nodeListSize =  hashMap->nodeListSize;
-    if (key == NULL || nodeList == NULL) {
-        return NULL;
-    }
-    // 计算index
-    uintptr_t hashcode = hashmap_hashcode(key);
-    unsigned int index = hashcode % nodeListSize;
-    Node* cur = &nodeList[index];
-    Node* target = NULL;
-    do{
-        if (cur->key == key) {
-            target = cur;
-            break;
-        }
-        cur = cur->next;
-    }while (cur != NULL);
-    return target == NULL ? NULL : target->value;
-}
-
-/**
- * 判断是否在hashmap中
- * @param hashMap
- * @param key
- * @return
- */
-int hashmap_contains(HashMap* hashMap, void* key) {
-    if (hashmap_get(hashMap, key) != NULL) {
-        return 1;
-    } else{
-        return 0;
-    }
-}
-
-/**
- * 计算当前key的hashcode
- * @param key
- * @return
- */
-unsigned int hashmap_hashcode(void* key) {
-    // 将地址转成无符号整形，保留指针的位模式
-    uintptr_t keyPtr = (uintptr_t)key;
-    // 高低16位异或
-    unsigned int hashcode = keyPtr ^ (keyPtr >> 16);
-    return hashcode;
-}
-
-
-/**
- * 获取keyset
- * @param hashMap
- * @return
- */
-ArrayList* hashmap_key_set(HashMap* hashMap) {
-    return hashMap->entrySet;
-}
-
-/**
- * 获取values
- * @param hashMap
- * @return
- */
-ArrayList* hashmap_values(HashMap* hashMap) {
-    ArrayList* entrySet = hashMap->entrySet;
-    ArrayList* res = init_array_list();
-    for (int i = 0; i < entrySet->len; i++) {
-        // 将当前元素插入到res的尾部
-        array_list_insert(res, array_list_get(entrySet, i), -1);
-    }
-    return res;
-}
-
-/**
- * entry之间是否相等
- */
-
-int entry_equals(Entry* entry1, Entry* entry2) {
-    return entry1->key == entry2->key && entry1->data == entry2->data ? 1 : 0;
 }
 
 

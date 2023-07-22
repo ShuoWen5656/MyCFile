@@ -141,7 +141,17 @@ ArrayList* hashmap_entry_set(HashMap* hashMap);
 
 int entry_equals(Entry* entry1, Entry* entry2);
 
+/**
+ * 清理hashmap中的所有元素
+ * @param hashMap
+ */
+void hashmap_clear(HashMap* hashMap);
 
+/**
+ * 释放hashmap中的所有内存
+ * @param hashMap
+ */
+void hashmap_free(HashMap* hashMap);
 
 
 
