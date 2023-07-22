@@ -30,6 +30,13 @@ typedef struct TowStackQueue{
 
 
 
+
+/**
+ * 构造函数
+ * @return
+ */
+TowStackQueue* tow_stack_queue_init();
+
 /**
  * 加入队头
  * @param towStackQueue

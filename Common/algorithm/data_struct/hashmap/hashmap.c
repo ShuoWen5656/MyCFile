@@ -358,23 +358,23 @@ void resize(HashMap *hashMap) {
 }
 
 
-/**
- * 测试用例
- * @return
- */
-int main() {
-    // 申请一个map
-    HashMap* hashMap = hashmap_init();
-    int size = 14;
-    int keys[14] = {0};
-    int values[14] = {0};
-    for (int i = 0; i < size; i++) {
-        keys[i] = i;
-        values[i] = size-i;
-        hashmap_put(hashMap, &keys[i], &values[i]);
-    }
-    int* p1 = hashmap_get(hashMap, &keys[0]);
-    int* p2 = hashmap_get(hashMap, &keys[2]);
-
-    return 0;
-}
+///**
+// * 测试用例
+// * @return
+// */
+//int main() {
+//    // 申请一个map
+//    HashMap* hashMap = hashmap_init();
+//    int size = 14;
+//    int keys[14] = {0};
+//    int values[14] = {0};
+//    for (int i = 0; i < size; i++) {
+//        keys[i] = i;
+//        values[i] = size-i;
+//        hashmap_put(hashMap, &keys[i], &values[i]);
+//    }
+//    int* p1 = hashmap_get(hashMap, &keys[0]);
+//    int* p2 = hashmap_get(hashMap, &keys[2]);
+//
+//    return 0;
+//}
