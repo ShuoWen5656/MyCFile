@@ -11,20 +11,21 @@
 /*****************************************************************************************************
  * 由于C++编译器支持重载，函数名称会做一些处理，而在c中仅是简单函数名，这里定义为了告诉c++编译器按照C语言的方式编译即可*
  *****************************************************************************************************/
- /**
-  * instack 内容到 outstack
-  * @param source
-  * @param target
-  */
-void in2out(Stack *source, Stack *target);
 
-void* poll_or_peek(TowStackQueue *pQueue, int i);
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
+/**
+ * instack 内容到 outstack
+ * @param source
+ * @param target
+ */
+void in2out(Stack *source, Stack *target);
+
+void* poll_or_peek(TowStackQueue *towStackQueue, int isPeek);
 
 
 
@@ -147,21 +148,21 @@ void* poll_or_peek(TowStackQueue *towStackQueue, int isPeek) {
 }
 
 
-int main() {
-    setbuf(stdout, NULL);
-    TowStackQueue* towStackQueue = tow_stack_queue_init();
-    int elms[] = {6,5,4,3,2,1};
-    int size = 6;
-    for (int i = 0; i < 3; i++) {
-        tow_stack_queue_add(towStackQueue, &elms[i]);
-    }
-    int res1 = *(int*)tow_stack_queue_peek(towStackQueue);
-    int res2 = *(int*)tow_stack_queue_poll(towStackQueue);
-    for (int i = 3; i < size; i++) {
-        tow_stack_queue_add(towStackQueue, &elms[i]);
-    }
-    int res3 = *(int*)tow_stack_queue_poll(towStackQueue);
-}
+//int main() {
+//    setbuf(stdout, NULL);
+//    TowStackQueue* towStackQueue = tow_stack_queue_init();
+//    int elms[] = {6,5,4,3,2,1};
+//    int size = 6;
+//    for (int i = 0; i < 3; i++) {
+//        tow_stack_queue_add(towStackQueue, &elms[i]);
+//    }
+//    int res1 = *(int*)tow_stack_queue_peek(towStackQueue);
+//    int res2 = *(int*)tow_stack_queue_poll(towStackQueue);
+//    for (int i = 3; i < size; i++) {
+//        tow_stack_queue_add(towStackQueue, &elms[i]);
+//    }
+//    int res3 = *(int*)tow_stack_queue_poll(towStackQueue);
+//}
 
 
 #ifdef __cplusplus
