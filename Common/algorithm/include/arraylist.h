@@ -113,6 +113,12 @@ void array_list_free(ArrayList* list);
  */
 int array_list_is_empty(ArrayList* list);
 
+/**
+ * 判断元素是否存在
+ * @param list
+ * @return
+ */
+int array_is_contains(ArrayList* list, void* target);
 
 #ifdef __cplusplus
 };

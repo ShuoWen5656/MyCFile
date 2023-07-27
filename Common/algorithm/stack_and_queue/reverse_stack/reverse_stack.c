@@ -36,20 +36,20 @@ int* process3(Stack* stack);
  * 主函数
  * @return
  */
-int main() {
-    // 创建一个栈
-    Stack* stack = stack_init();
-    int nums[] = {0,1,2,3,4,5};
-    for (int i = 0; i < 6; ++i) {
-        stack_push(stack, &nums[i]);
-    }
-    process1(stack);
-    for (int i = 0; i < 6; ++i) {
-        printf("The first num is : %d \n", *(int*)stack_poll(stack));
-    }
-    stack_free(stack);
-    return 0;
-}
+//int main() {
+//    // 创建一个栈
+//    Stack* stack = stack_init();
+//    int nums[] = {0,1,2,3,4,5};
+//    for (int i = 0; i < 6; ++i) {
+//        stack_push(stack, &nums[i]);
+//    }
+//    process1(stack);
+//    for (int i = 0; i < 6; ++i) {
+//        printf("The first num is : %d \n", *(int*)stack_poll(stack));
+//    }
+//    stack_free(stack);
+//    return 0;
+//}
 
 
 /**

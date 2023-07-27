@@ -197,7 +197,24 @@ int array_list_is_empty(ArrayList* list) {
     }
 }
 
-
+/**
+ * 判断元素是否存在
+ * @param list
+ * @return
+ */
+int array_is_contains(ArrayList* list, void* target) {
+    if (list == NULL || list->size == 0 || list->len == 0) {
+        return 0;
+    }
+    Data* datas = list->datas;
+    for (int i = 0; i < list->len; ++i) {
+        Data data = datas[i];
+        if (data.data == target){
+            return 1;
+        }
+    }
+    return 0;
+}
 
 
 /**
