@@ -92,7 +92,7 @@ void* array_list_get(ArrayList* list, long index);
  * @param list
  * @param index
  */
-void array_list_remove_at(ArrayList* list, long index);
+void* array_list_remove_at(ArrayList* list, long index);
 
 /**
  * 清空数组元素，不释放内存

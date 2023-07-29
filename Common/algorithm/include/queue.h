@@ -25,6 +25,12 @@ typedef struct Queue {
 }Queue;
 
 /**
+ * 构造函数
+ * @return
+ */
+Queue* queue_init();
+
+/**
  * push 到队列尾巴
  * @param queue
  */
@@ -35,8 +41,14 @@ void queue_push(Queue* queue, void* data);
  * @param quque
  * @return
  */
-void* queue_poll(Queue* quque);
+void* queue_poll(Queue* queue);
 
+/**
+ * 查看队头
+ * @param quque
+ * @return
+ */
+void* queue_peek(Queue* queue);
 
 /**
  * 判空

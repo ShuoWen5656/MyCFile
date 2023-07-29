@@ -125,26 +125,31 @@ void* array_list_get(ArrayList* list, long index) {
  * @param list
  * @param index
  */
-void array_list_remove_at(ArrayList* list, long index) {
+void* array_list_remove_at(ArrayList* list, long index) {
+    // 要弹出的数据地址
+    void* res = NULL;
     // 参数校验
     if (NULL == list || index < -1 || index >= list->len) {
-        return;
+        return res;
     }
     if (index == -1) {
         // 删除最后一个元素
+        res = list->datas[list->len-1].data;
         list->datas[list->len-1].data = NULL;
         list->len--;
-        return;
+        return res;
     }
+    res = list->datas[index].data;
     // 删除元素，将元素覆盖过来即可
     int next = index+1;
     for (; next < list->len; ++next) {
         list->datas[next-1].data = list->datas[next].data;
     }
     // 将最后一个元素变成null
-    list->datas[next].data = NULL;
+    list->datas[next-1].data;
+    list->datas[next-1].data = NULL;
     list->len--;
-    return;
+    return res;
 }
 
 /**

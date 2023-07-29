@@ -18,6 +18,18 @@ extern "C"
 #include "queue.h"
 #include <stdlib.h>
 
+
+/**
+* 构造函数
+* @return
+*/
+Queue* queue_init() {
+    Queue* queue = NULL;
+    queue = calloc(1, sizeof(Queue));
+    queue->arrayList = init_array_list();
+}
+
+
 /**
 * push 到队列尾巴
 * @param queue
@@ -35,29 +47,61 @@ void queue_push(Queue* queue, void* data) {
  * @param quque
  * @return
  */
-void* queue_poll(Queue* quque);
+void* queue_poll(Queue* queue) {
+    if (queue == NULL || queue->arrayList == NULL || queue->arrayList->len == 0) {
+        return NULL;
+    }
+    return array_list_remove_at(queue->arrayList, 0);
+}
 
+/**
+ * 弹出队头
+ * @param quque
+ * @return
+ */
+void* queue_peek(Queue* queue) {
+    if (queue == NULL || queue->arrayList == NULL || queue->arrayList->len == 0) {
+        return NULL;
+    }
+    return array_list_get(queue->arrayList, 0);
+}
 
 /**
  * 判空
  * @param queue
  * @return
  */
-int queue_is_empty(Queue* queue);
+int queue_is_empty(Queue* queue) {
+    if (queue == NULL || queue->arrayList == NULL || queue->arrayList->len == 0) {
+        return 1;
+    }else {
+        return 0;
+    }
+}
 
-/**
- * 判空
- * @param queue
- * @return
- */
-int queue_is_empty(Queue* queue);
+
 
 /**
  * 清空元素，但不释放内存
  * @param queue
  */
-void queue_clear(Queue* queue);
+void queue_clear(Queue* queue) {
+    array_list_clear(queue->arrayList);
+}
 
+/**
+ * 清空元素并释放内存
+ * @param queue
+ */
+void queue_free(Queue* queue) {
+    if (queue == NULL) {
+        return;
+    }
+    if (queue->arrayList != NULL) {
+        array_list_free(queue->arrayList);
+    }
+    free(queue);
+}
 
 #ifdef __cplusplus
 };
