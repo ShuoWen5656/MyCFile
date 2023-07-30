@@ -21,16 +21,16 @@ extern "C"
 /**
 * 递归函数主体
 */
-void process1(Stack* stack);
+void reverse_stack_process1(Stack* stack);
 /**
 * 递归函数副主体
 */
-int* process2(Stack* stack);
+int* reverse_stack_process2(Stack* stack);
 
 /**
 * 递归函数副主体(另一种判断方法)
 */
-int* process3(Stack* stack);
+int* reverse_stack_process3(Stack* stack);
 
 /**
  * 主函数
@@ -43,7 +43,7 @@ int* process3(Stack* stack);
 //    for (int i = 0; i < 6; ++i) {
 //        stack_push(stack, &nums[i]);
 //    }
-//    process1(stack);
+//    reverse_stack_process1(stack);
 //    for (int i = 0; i < 6; ++i) {
 //        printf("The first num is : %d \n", *(int*)stack_poll(stack));
 //    }
@@ -58,14 +58,14 @@ int* process3(Stack* stack);
  * 3、然后再放入当前层取到的值
  * @param stack
  */
-void process1(Stack* stack){
+void reverse_stack_process1(Stack* stack){
     if (stack_is_empty(stack)) {
         return;
     }
     // 取stack最底层的值的地址，其实用值也可以，这里保证原值原地址
-    int* p_cur_int = process2(stack);
+    int* p_cur_int = reverse_stack_process2(stack);
     // 再取底层
-    process1(stack);
+    reverse_stack_process1(stack);
     // 放入
     stack_push(stack, p_cur_int);
 }
@@ -76,14 +76,14 @@ void process1(Stack* stack){
  * @param stack
  * @return
  */
-int* process2(Stack* stack){
+int* reverse_stack_process2(Stack* stack){
     if (stack_is_empty(stack)) {
         return 0;
     }
     // 获取当前层的值
     int* p_cur = stack_poll(stack);
     // 继续获取底
-    int* next = process2(stack);
+    int* next = reverse_stack_process2(stack);
     if (next == 0) {
         // 说明当前就是底层了
         return p_cur;
@@ -94,7 +94,7 @@ int* process2(Stack* stack){
     }
 }
 
-int* process3(Stack* stack) {
+int* reverse_stack_process3(Stack* stack) {
     if (stack_is_empty(stack)) {
         return 0;
     }
@@ -107,7 +107,7 @@ int* process3(Stack* stack) {
         // 将自己先放回去
         stack_push(stack, p_cur);
         // 还有值就继续取
-        return process3(stack);
+        return reverse_stack_process3(stack);
     }
 }
 
