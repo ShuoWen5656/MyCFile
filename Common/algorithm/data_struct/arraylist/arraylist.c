@@ -58,7 +58,7 @@ int array_list_insert(ArrayList *list, void* p_data, long index){
     // 如果要扩容，则扩容后的内存量
     int relloc_size = 0;
     // 参数校验.list不为null，index不可以越界
-    if (NULL == list || index < -1 || index >= list->len) {
+    if (NULL == list || index < -1 || index >= list->size) {
         return -1;
     }
     // 判断扩容,未插入前如果长度还剩一个位置，则开始扩容

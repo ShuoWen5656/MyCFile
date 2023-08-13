@@ -68,21 +68,21 @@ void hanio_problem_process21(Record *record, enum Action actionRev, enum Action 
                              Stack *stack_r);
 
 
-/**
- * 测试用例
- * @return
- */
-int main() {
-    // 申请三个地址作为三个柱子
-    char* left = "left";
-    char* right = "right";
-    char* mid = "mid";
-    int num = 2;
-    hanio_problem_process2(num);
-//    hanio_problem_process(2,left, mid, right, left, right);
-
-
-}
+///**
+// * 测试用例
+// * @return
+// */
+//int main() {
+//    // 申请三个地址作为三个柱子
+//    char* left = "left";
+//    char* right = "right";
+//    char* mid = "mid";
+//    int num = 2;
+//    hanio_problem_process2(num);
+////    hanio_problem_process(2,left, mid, right, left, right);
+//
+//
+//}
 
 void hanio_problem_process2(int num) {
     // 初始化结构

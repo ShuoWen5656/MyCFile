@@ -81,12 +81,12 @@ void double_queue_push_last(DoubleQueue* doubleQueue, void* data);
 /**
  * 清空元素
  */
-void* double_queue_clear(DoubleQueue* doubleQueue);
+void double_queue_clear(DoubleQueue* doubleQueue);
 
 /**
  * 释放内存
  */
-void* double_queue_free(DoubleQueue* doubleQueue);
+void double_queue_free(DoubleQueue* doubleQueue);
 
 #ifdef __cplusplus
 };

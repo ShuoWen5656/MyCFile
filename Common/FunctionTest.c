@@ -47,35 +47,35 @@ double Average_va(double v1, double v2, ...);
  */
 double any_func(double (*p_func)(double*, size_t), double*, size_t);
 
-
-// main函数由主机函数调用，无需函数原型
-int main(int argc, char* argv[])
-{
-    setbuf(stdout, NULL);
-
-    // 创建一个长度固定的数组,初始化都是0.0
-    double params[MAX_LEN] = {0.0};
-    size_t consumeNum = MAX_LEN;
-    // 将自定义长度赋值给consumeNum
-    scanf("%zd", &consumeNum);
-    // 获取consumeNum个数字保存到params
-    size_t size = GetData(params, (int)consumeNum > MAX_LEN ? MAX_LEN : consumeNum);
-    printf("the size is %zu \n", size);
-    printf("the size2 is %zu \n", sizeof(params));
-
-    // 求平均值
-    double average = any_func(Average, params, consumeNum);
-//     多变元一定要协商好变元类型和变元结束点
-//    double average = Average_va((double)0.1, (double)0.2, (double)0.3, (double)0.4, (double)0.0);
-
-    // 申明一个函数指针
-//    double (*p_average) (double, double, ...);
-//    p_average = Average_va;
-//    double average = p_average(0.1, 0.2, 0.3, 0.4, 0.8,2.0, 0.0);
-    printf("the average is %10.1lf \n", average);
-
-
-}
+//
+//// main函数由主机函数调用，无需函数原型
+//int main(int argc, char* argv[])
+//{
+//    setbuf(stdout, NULL);
+//
+//    // 创建一个长度固定的数组,初始化都是0.0
+//    double params[MAX_LEN] = {0.0};
+//    size_t consumeNum = MAX_LEN;
+//    // 将自定义长度赋值给consumeNum
+//    scanf("%zd", &consumeNum);
+//    // 获取consumeNum个数字保存到params
+//    size_t size = GetData(params, (int)consumeNum > MAX_LEN ? MAX_LEN : consumeNum);
+//    printf("the size is %zu \n", size);
+//    printf("the size2 is %zu \n", sizeof(params));
+//
+//    // 求平均值
+//    double average = any_func(Average, params, consumeNum);
+////     多变元一定要协商好变元类型和变元结束点
+////    double average = Average_va((double)0.1, (double)0.2, (double)0.3, (double)0.4, (double)0.0);
+//
+//    // 申明一个函数指针
+////    double (*p_average) (double, double, ...);
+////    p_average = Average_va;
+////    double average = p_average(0.1, 0.2, 0.3, 0.4, 0.8,2.0, 0.0);
+//    printf("the average is %10.1lf \n", average);
+//
+//
+//}
 
 // 函数定义
 
