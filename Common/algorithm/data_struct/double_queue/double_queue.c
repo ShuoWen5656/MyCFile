@@ -17,6 +17,7 @@
 DoubleQueue* double_queue_init(){
     DoubleQueue* doubleQueue = calloc(1, sizeof(DoubleQueue));
     doubleQueue->arrayList = init_array_list();
+    return doubleQueue;
 }
 
 /**
@@ -39,7 +40,7 @@ void* double_queue_poll(DoubleQueue* doubleQueue) {
         return NULL;
     }
     ArrayList* arrayList = doubleQueue->arrayList;
-    array_list_remove_at(arrayList, 0);
+    return array_list_remove_at(arrayList, 0);
 }
 
 /**
@@ -50,7 +51,7 @@ void* double_queue_peek(DoubleQueue* doubleQueue) {
         return NULL;
     }
     ArrayList* arrayList = doubleQueue->arrayList;
-    array_list_get(arrayList, 0);
+    return array_list_get(arrayList, 0);
 }
 
 /**
@@ -61,7 +62,7 @@ int double_queue_is_empty(DoubleQueue* doubleQueue) {
         return NULL;
     }
     ArrayList* arrayList = doubleQueue->arrayList;
-    array_list_is_empty(arrayList);
+    return array_list_is_empty(arrayList);
 }
 
 /**
@@ -149,31 +150,31 @@ void double_queue_free(DoubleQueue* doubleQueue) {
  * 测试用例
  * @return
  */
-int main() {
-    setbuf(stdout, NULL);
-    DoubleQueue* doubleQueue = double_queue_init();
-    int len = 4;
-    int* ints = calloc(len, sizeof(int));
-    for (int i = 0; i < len; ++i) {
-        ints[i] = i;
-    }
-    double_queue_push_first(doubleQueue, &ints[0]);
-    double_queue_push_last(doubleQueue, &ints[1]);
-    double_queue_push(doubleQueue, &ints[2]);
-    double_queue_push_first(doubleQueue, &ints[3]);
-    ArrayList* arrayList = doubleQueue->arrayList;
-    for (int j = 0; j < len; ++j) {
-        printf("the index %d is %d \n", j, *(int*)array_list_get(arrayList, j));
-    }
-    // 测试读
-    int i1 = *(int*)double_queue_peek(doubleQueue);
-    int i2 = *(int*)double_queue_peek_last(doubleQueue);
-    int i3 = *(int*)double_queue_poll_first(doubleQueue);
-    int i4 = *(int*)double_queue_poll_last(doubleQueue);
-
-    double_queue_free(doubleQueue);
-    return 0;
-}
+//int main() {
+//    setbuf(stdout, NULL);
+//    DoubleQueue* doubleQueue = double_queue_init();
+//    int len = 4;
+//    int* ints = calloc(len, sizeof(int));
+//    for (int i = 0; i < len; ++i) {
+//        ints[i] = i;
+//    }
+//    double_queue_push_first(doubleQueue, &ints[0]);
+//    double_queue_push_last(doubleQueue, &ints[1]);
+//    double_queue_push(doubleQueue, &ints[2]);
+//    double_queue_push_first(doubleQueue, &ints[3]);
+//    ArrayList* arrayList = doubleQueue->arrayList;
+//    for (int j = 0; j < len; ++j) {
+//        printf("the index %d is %d \n", j, *(int*)array_list_get(arrayList, j));
+//    }
+//    // 测试读
+//    int i1 = *(int*)double_queue_peek(doubleQueue);
+//    int i2 = *(int*)double_queue_peek_last(doubleQueue);
+//    int i3 = *(int*)double_queue_poll_first(doubleQueue);
+//    int i4 = *(int*)double_queue_poll_last(doubleQueue);
+//
+//    double_queue_free(doubleQueue);
+//    return 0;
+//}
 
 
 
