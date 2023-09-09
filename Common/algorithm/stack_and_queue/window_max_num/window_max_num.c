@@ -33,27 +33,27 @@ int* window_max_num(int* nums, int len, int windowSize);
  */
 void dealQueue(DoubleQueue *pQueue, int *pInt, int* indexs,int i);
 
-int main() {
-    setbuf(stdout, NULL);
-    int len = 8;
-    int* nums = calloc(8, sizeof(int));
-    nums[0] = 4;
-    nums[1] = 3;
-    nums[2] = 5;
-    nums[3] = 6;
-    nums[4] = 2;
-    nums[5] = 9;
-    nums[6] = 5;
-    nums[7] = 7;
-//    int nums[8] = {4,3,5,6,2,9,5,7};
-//    int nums[len];
-//    nums = {4,3,6,5,2,9,5,7};
-    int windowSize = 3;
-    int* res = window_max_num(nums, len, windowSize);
-    for (int i = 0; i < len - 3 + 1; i++) {
-        printf("the %d th num is %d \n", i, res[i]);
-    }
-}
+//int main() {
+//    setbuf(stdout, NULL);
+//    int len = 8;
+//    int* nums = calloc(8, sizeof(int));
+//    nums[0] = 4;
+//    nums[1] = 3;
+//    nums[2] = 5;
+//    nums[3] = 6;
+//    nums[4] = 2;
+//    nums[5] = 9;
+//    nums[6] = 5;
+//    nums[7] = 7;
+////    int nums[8] = {4,3,5,6,2,9,5,7};
+////    int nums[len];
+////    nums = {4,3,6,5,2,9,5,7};
+//    int windowSize = 3;
+//    int* res = window_max_num(nums, len, windowSize);
+//    for (int i = 0; i < len - 3 + 1; i++) {
+//        printf("the %d th num is %d \n", i, res[i]);
+//    }
+//}
 
 
 int* window_max_num(int* nums, int len, int windowSize) {
