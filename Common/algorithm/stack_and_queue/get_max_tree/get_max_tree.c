@@ -28,11 +28,11 @@ extern "C"
  * 测试用例
  * @return
  */
-int main() {
-    int arr[5] = {3,4,5,1,2};
-    TreeNode* res = getMaxNode(arr , 5);
-    printf("parent is %d", res->value);
-}
+//int main() {
+//    int arr[5] = {3,4,5,1,2};
+//    TreeNode* res = getMaxNode(arr , 5);
+//    printf("parent is %d", res->value);
+//}
 
 /**
  * 获取最大树
